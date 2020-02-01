@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>products electron</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 mx-auto">
+                <h3 class="text-center">Insert New Product</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="name" placeholder="product name" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="price" placeholder="product price">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="description" placeholder="product description">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Save</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const {ipcRenderer} = require('electron');
+
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nameProduct = document.getElementById('name').value;
+            const priceProduct = document.getElementById('price').value;
+            const descriptionProduct = document.getElementById('description').value;
+             
+             const newProduct = {
+                 name:nameProduct,
+                 price:priceProduct,
+                 description:descriptionProduct
+             }
+
+            ipcRenderer.send('productNew', newProduct);
+
+        })
+    </script>
+
+</body>
+
+</html>
